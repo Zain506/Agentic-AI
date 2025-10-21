@@ -7,9 +7,10 @@ The Tri-Agent workflow aims to improve on the current triage system in many emer
 
 We aim to use CrewAI to reconstruct this from the research paper - a framework for building Agentic AI systems. 
 It consists of an agent for each stage of the pipeline
-    1. Scoping Agent
-    2. Data Analysis Agent
-    3. Research Supervisor Agent
-    4. Reporting Agent
+
+1. Scoping Agent
+2. Data Analysis Agent
+3. Research Supervisor Agent
+4. Reporting Agent
 
 ![Diagram](diagram.png)
