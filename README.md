@@ -14,3 +14,17 @@ It consists of an agent for each stage of the pipeline
 4. Reporting Agent
 
 ![Diagram](diagram.png)
+
+
+## Installation
+
+Install the [uv](https://docs.astral.sh/uv/#highlights) package manager. Then:
+
+```bash
+uv sync
+```
+
+For development,
+```bash
+uv sync --all-extras
+```

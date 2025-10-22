@@ -7,8 +7,14 @@ readme = "README.md"
 requires-python = ">=3.10,<3.14"
 dependencies = [
     "crewai[tools]>=0.203.0,<1.0.0",
-    "crewai"
+    "crewai",
 ]
+
+[project.optional-dependencies]
+dev = ["ruff", "black", "mypy", "pytest", "pre-commit", "nbstripout"]
+notebooks=["jupyterlab", "jupyterlab_vim"]
+
+
 
 [project.scripts]
 agentic_ai = "agentic_ai.main:run"
@@ -23,9 +29,6 @@ build-backend = "hatchling.build"
 
 [tool.crewai]
 type = "crew"
-
-[project.optional-dependencies]
-dev = ["ruff", "black", "mypy", "pytest", "pre-commit", "nbstripout"]
 
 [tool.ruff]
 line-length = 88
