@@ -5,13 +5,9 @@
 This project aims to implement the Tri-Agent workflow introduced in the following [paper](https://arxiv.org/pdf/2510.16080).
 The Tri-Agent workflow aims to improve on the current triage system in many emergency departments around the world. 
 
-We aim to use CrewAI to reconstruct this from the research paper - a framework for building Agentic AI systems. 
-It consists of an agent for each stage of the pipeline
+While TriAgent uses LangGraph and LangChain, we aim to use a newer tool called CrewAI.
 
-1. Scoping Agent
-2. Data Analysis Agent
-3. Research Supervisor Agent
-4. Reporting Agent
+Instead of completely re-implementing this pipeline (which is more aimed at identifying new biomarkers that aren't currently used), this pipeline aims to be a deployable model that recommends the biomarkers that should be taken from a patient, given their history and their current readings.
 
 ![Diagram](diagram.png)
 
