@@ -9,7 +9,7 @@ While TriAgent uses LangGraph and LangChain, we aim to use a newer tool called C
 
 Instead of completely re-implementing this pipeline (which is more aimed at identifying new biomarkers that aren't currently used), this pipeline aims to be a deployable model that recommends the biomarkers that should be taken from a patient, given their history and their current readings.
 
-![Diagram](diagram.png)
+![Diagram](dev/diagram.png)
 
 
 ## Installation
@@ -24,3 +24,7 @@ For development,
 ```bash
 uv sync --all-extras
 ```
+
+# Development
+
+Development notes, brainstorming and ideation found in the dev/ folder
