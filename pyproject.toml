@@ -1,5 +1,5 @@
 [project]
-name = "agentic_ai"
+name = "TriAgent"
 version = "0.0.1"
 description = "Agentic-AI using crewAI"
 authors = [{ name = "Zain", email = "nomani.zain@gmail.com" }]
@@ -16,11 +16,11 @@ notebooks=["jupyterlab", "jupyterlab_vim"]
 
 
 [project.scripts]
-agentic_ai = "agentic_ai.main:run"
-run_crew = "agentic_ai.main:run"
-train = "agentic_ai.main:train"
-replay = "agentic_ai.main:replay"
-test = "agentic_ai.main:test"
+TriAgent = "TriAgent.main:run"
+run_crew = "TriAgent.main:run"
+train = "TriAgent.main:train"
+replay = "TriAgent.main:replay"
+test = "TriAgent.main:test"
 
 [build-system]
 requires = ["hatchling"]

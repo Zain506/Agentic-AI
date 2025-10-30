@@ -3,7 +3,7 @@ import sys
 import warnings
 from datetime import datetime
 
-from agentic_ai.crew import AgenticAi
+from TriAgent.crew import TriAgent
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -20,9 +20,9 @@ def run():
     inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
 
     try:
-        AgenticAi().crew().kickoff(inputs=inputs)
+        TriAgent().crew().kickoff(inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+        raise Exception(f"An error occurred while running the crew: {e}") from e
 
 
 def train():
@@ -31,12 +31,12 @@ def train():
     """
     inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
     try:
-        AgenticAi().crew().train(
+        TriAgent().crew().train(
             n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs
         )
 
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+        raise Exception(f"An error occurred while training the crew: {e}") from e
 
 
 def replay():
@@ -44,10 +44,10 @@ def replay():
     Replay the crew execution from a specific task.
     """
     try:
-        AgenticAi().crew().replay(task_id=sys.argv[1])
+        TriAgent().crew().replay(task_id=sys.argv[1])
 
     except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+        raise Exception(f"An error occurred while replaying the crew: {e}") from e
 
 
 def test():
@@ -57,9 +57,9 @@ def test():
     inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
 
     try:
-        AgenticAi().crew().test(
+        TriAgent().crew().test(
             n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs
         )
 
     except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+        raise Exception(f"An error occurred while testing the crew: {e}") from e

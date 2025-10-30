@@ -10,8 +10,8 @@ from crewai.project import CrewBase, agent, crew, task
 
 
 @CrewBase
-class AgenticAi:
-    """AgenticAi crew"""
+class TriAgent:
+    """TriAgent crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
@@ -53,7 +53,7 @@ class AgenticAi:
 
     @crew
     def crew(self) -> Crew:
-        """Creates the AgenticAi crew"""
+        """Creates the TriAgent crew"""
         # To learn how to add knowledge sources to your crew, check out the documentation:
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
