@@ -15,3 +15,109 @@ reporting_task:
     A fully fledged report with the main topics, each with a full section of information.
     Formatted as markdown without '```'
   agent: reporting_analyst
+
+# New tasks
+
+generate_b1:
+  description: >
+    Engage in dialogue with the user to clarify their exact problem statement, including:
+      Patient constraints,
+      Demographics,
+      Patient medical data,
+      Current biomarkers, readings and lab results already available for the patient
+  expected_output: >
+    Markdown text
+
+parse_to_data_scientist:
+  context: [generate_b1]
+  description: >
+    Use the context to communicate the current problem and information to a data scientist.
+    They will use this information to search databases and analyse the data
+  expected_output: >
+    Markdown text report for the data scientist to use for their research
+
+get_datasets: # Requires tool to access database(s)
+  context: [parse_to_data_scientist]
+  description: >
+    Out of all the datasets you have access to, find the ones which you can perform EDA on.
+    Identify the ones with the same features that we have described.
+    Make sure the ones you show us have a ground truth label corresponding to what we think the condition is (if provided)
+  expected_output: >
+    Array of strings or indices which index the datasets we can analyse
+
+eda: # Exploratory data analysis
+  context: [get_datasets, parse_to_data_scientist]
+  description: >
+    Perform Exploratory Data Analysis on the data. Obtain summary statistics to obtain various metrics that are relevant to our problem.
+  expected_output: >
+    A report of the data, including all relevant statistics and all information that a data scientist can use to preprocess the data.
+
+preprocess:
+  context: [eda, parse_to_data_scientist]
+  description: >
+    Preprocess the data, including standardisation, normalisation, autotask detection, random train/valid/test set splitting, hyperparameter tuning, model training and selection, and explainability analysis (eg feature importance, SHAP values) by calling a AutoML pipeline
+  expected_output: >
+    A Model object in Python - with all parameters included - of the optimal model according to the AutoML pipeline.
+    And include the most important features according to model, as well as a normalised importance weighting for each.
+
+gen_b2:
+  context: [preprocess]
+  description: >
+    Generate a report of the most significant features that determine the output of the model. Also include their respective weights.
+  expected_output: >
+    Markdown report as a string
+
+
+gen_research_brief:
+  context: [gen_b2, generate_b1]
+  description: >
+    Using the provided context, create a suitable query for each biomarker that could help our patient. This query will be used to perform RAG and collect evidence in support of it - to investigate how well-researched each biomarker is.
+  expected_output: >
+    Array of strings with each string being a query used to search a knowledge base
+
+
+research_knowledge_base: # Entirely tool-based, no agent
+  context: [gen_research_brief]
+  description: >
+    Using the research brief, research each query in the knowledge base to find the best fits across the vector database
+  expected_output: >
+    JSON in the structure of
+      {
+        "query": [
+          {"evidence": text_excerpt, "embedding": vector_embedding_of_text_excerpt},
+          {"evidence": text_excerpt, "embedding": vector_embedding_of_text_excerpt},...
+      ]
+    }
+
+
+clean_json:
+  context: [research_knowledge_base]
+  description: >
+    Deduplicate the JSON from any evidence or queries that are shared. Clean and tidy it up from any irrelevant points.
+  expected_output: >
+    JSON in the structure of
+      {
+        "query": [
+          {"evidence": text_excerpt, "embedding": vector_embedding_of_text_excerpt},
+          {"evidence": text_excerpt, "embedding": vector_embedding_of_text_excerpt},...
+      ]
+    }
+
+
+get_sim:
+  context: [clean_json]
+  description: >
+    Generate similarity matrix from the JSON
+  expected_output: >
+    Tensor
+
+
+get_high_points:
+  context: [get_sim]
+  description: >
+    Inspect the similarity matrix and retrieve all high points (and their respective evidences)
+    From these points, generate a report of the biomarkers, their similarity scores and the evidence in support of them.
+    Classify whether each biomarker is an already established biomarker for our purposes, or a novel one with little realistic evidence in support of it (indicating it may be one to research in the future)
+
+  expected_output: >
+    Markdown report of all biomarkers, classifying whether each one is novel or already established in medical literature.
